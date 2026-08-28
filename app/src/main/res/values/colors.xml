@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sallo_primary">#07147A</color>
+    <color name="sallo_primary_dark">#050D4D</color>
+    <color name="sallo_background">#F7F6FC</color>
+    <color name="sallo_surface">#FFFFFF</color>
+    <color name="sallo_text_primary">#1F2340</color>
+    <color name="sallo_text_secondary">#6F7285</color>
+    <color name="sallo_accent">#0E7AFE</color>
+    <color name="sallo_success">#0E9F6E</color>
+    <color name="sallo_exit">#E53935</color>
+    <color name="sallo_border">#D9DCE8</color>
+    <color name="sallo_sidebar">#EEF1FF</color>
+    <color name="sallo_overlay">#66071A52</color>
+    <color name="sallo_warning">#FFB020</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

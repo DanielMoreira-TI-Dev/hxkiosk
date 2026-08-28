@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="14dp">
+
+    <FrameLayout
+        android:id="@+id/allowedAppIconContainer"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:background="@drawable/bg_apps_drawer_icon"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:id="@+id/allowedAppIcon"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/allowedAppName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="2"
+        android:minHeight="40dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/allowedAppPackage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone" />
+</LinearLayout>

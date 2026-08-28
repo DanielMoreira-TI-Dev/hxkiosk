@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:orientation="horizontal"
+    android:padding="18dp">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="18dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="18dp"
+                android:text="@string/panel_title"
+                android:textColor="@color/sallo_text_primary"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/sallo_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_operation_mode"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/operationModeGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/modeLinkRadio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/single_link_mode" />
+
+                        <RadioButton
+                            android:id="@+id/modeAppsRadio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/allowed_apps_mode" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/modeLinkSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/allowed_url"
+                            android:textColor="@color/sallo_text_primary"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/allowedUrlField"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_input"
+                            android:hint="@string/url_placeholder"
+                            android:inputType="textUri"
+                            android:minHeight="56dp"
+                            android:paddingHorizontal="18dp"
+                            android:paddingVertical="14dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/saveLinkButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/save_link"
+                            app:backgroundTint="@color/black" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/url_helper"
+                            android:textColor="@color/sallo_text_secondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/modeAppsSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apps_summary"
+                            android:textColor="@color/sallo_text_primary"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/authorizedAppsSummaryText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/sallo_text_secondary"
+                            android:textSize="15sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/selectAppsButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/select_apps"
+                            app:backgroundTint="@color/sallo_primary_dark" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/apps_helper"
+                            android:textColor="@color/sallo_text_secondary" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/sallo_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_security"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/blockSettingsSwitch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/block_android_settings" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/blockNotificationsSwitch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/block_notifications" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/blockBackSwitch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/block_back_button" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/blockRecentSwitch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/block_recent_button" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/preventExitSwitch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/prevent_kiosk_exit" />
+                    <com.google.android.material.materialswitch.MaterialSwitch android:id="@+id/autoStartSwitch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="@string/auto_start_kiosk" />
+
+                    <TextView
+                        android:id="@+id/restrictionNoteText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:textColor="@color/sallo_text_secondary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/devicePermissionStatusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/grantDevicePermissionsButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/grant_device_permissions"
+                        app:strokeColor="@color/sallo_border"
+                        app:strokeWidth="1dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/sallo_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_appearance"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/launcher_name"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/launcherNameField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_input"
+                        android:hint="@string/default_launcher_name"
+                        android:minHeight="56dp"
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="14dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/primary_color"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/primaryColorSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_input"
+                        android:padding="14dp" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/showLogoSwitch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/show_logo_top" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/grid_columns"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/columnsGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/columns3Radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/three_columns" />
+
+                        <RadioButton
+                            android:id="@+id/columns4Radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="@string/four_columns" />
+
+                        <RadioButton
+                            android:id="@+id/columns5Radio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="@string/five_columns" />
+                    </RadioGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/sallo_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_administration"
+                        android:textColor="@color/sallo_text_primary"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/changePasswordButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/change_admin_password"
+                        app:backgroundTint="@color/black" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/exitKioskButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/leave_kiosk_mode"
+                        app:backgroundTint="@color/sallo_exit" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/restoreSettingsButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/restore_settings"
+                        app:strokeColor="@color/sallo_border"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/saveSettingsButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/save_changes"
+                        app:backgroundTint="@color/black" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

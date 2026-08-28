@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen">
+
+    <LinearLayout
+        android:id="@+id/webModeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/kioskWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appsModeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="24dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/appsHeaderBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_apps_drawer_header"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="22dp"
+            android:paddingVertical="18dp">
+
+            <LinearLayout
+                android:id="@+id/appsStatusContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_footer_chip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="8dp">
+
+                    <FrameLayout
+                        android:layout_width="18dp"
+                        android:layout_height="18dp">
+
+                        <ImageView
+                            android:id="@+id/appsWifiIcon"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_status_wifi"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:id="@+id/appsWifiIndicator"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="bottom|end"
+                            android:background="@drawable/bg_status_online"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="7sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_footer_chip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_status_clock"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/appsClockText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_footer_chip"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_status_battery"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/appsBatteryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/allowedAppsEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="60dp"
+            android:text="@string/no_allowed_apps"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allowedAppsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="22dp"
+            android:paddingBottom="120dp"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingBottom="20dp"
+            android:text="@string/restricted_version"
+            android:textColor="@color/sallo_text_secondary"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/webStatusContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginEnd="18dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_footer_chip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp">
+
+            <FrameLayout
+                android:layout_width="18dp"
+                android:layout_height="18dp">
+
+                <ImageView
+                    android:id="@+id/webWifiIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_status_wifi"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/webWifiIndicator"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_status_online"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="7sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_footer_chip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_status_clock"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/webClockText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_footer_chip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_status_battery"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/webBatteryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/statusBarTouchBlocker"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_gravity="top"
+        android:background="@drawable/bg_apps_drawer_status_guard"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/webErrorContainer"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_card_surface"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/web_error"
+            android:textColor="@color/sallo_text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/webErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/sallo_text_secondary"
+            android:textSize="15sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/webRetryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/confirm"
+            app:backgroundTint="@color/sallo_primary" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/modeFooterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|start"
+        android:layout_marginStart="18dp"
+        android:background="@drawable/bg_footer_chip"
+        android:clickable="true"
+        android:contentDescription="@string/kiosk_active"
+        android:drawableStart="@android:drawable/ic_lock_lock"
+        android:drawablePadding="0dp"
+        android:drawableTint="@color/white"
+        android:focusable="true"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
+        android:text="" />
+</FrameLayout>
