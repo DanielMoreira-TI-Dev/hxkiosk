@@ -3,222 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sallo_overlay"
-    android:padding="28dp">
+    android:background="@color/sallo_primary_dark"
+    android:fitsSystemWindows="true"
+    android:padding="24dp">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="520dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        app:cardBackgroundColor="@color/sallo_surface">
+        app:cardBackgroundColor="@color/sallo_surface"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="24dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/material_dynamic_neutral10"
+                android:text="@string/admin_access"
+                android:textColor="@color/sallo_primary_dark"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/adminAccessSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/admin_access_subtitle"
+                android:textColor="@color/sallo_text_secondary"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/adminPasswordField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_admin_password"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="22dp">
+                android:hint="@string/admin_pin_hint"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:minHeight="56dp"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:singleLine="true"
+                android:textColor="#111827"
+                android:textColorHint="#6B7280"
+                android:textSize="18sp" />
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@android:drawable/ic_lock_lock"
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:text="@string/admin_access"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/adminAccessError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="18dp"
+                android:textColor="@color/sallo_exit"
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/adminAccessSubtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/admin_access_subtitle"
-                    android:textColor="@color/sallo_text_secondary"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/adminPasswordField"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_input"
-                    android:hint="@string/admin_pin_hint"
-                    android:inputType="textPassword"
-                    android:minHeight="56dp"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="14dp" />
-
-                <TextView
-                    android:id="@+id/adminAccessError"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/sallo_exit"
-                    android:textSize="14sp" />
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:alignmentMode="alignMargins"
-                    android:columnCount="3"
-                    android:rowCount="4"
-                    android:useDefaultMargins="true">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad1"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="1"
-                        app:backgroundTint="@color/material_dynamic_neutral_variant0"
-                        app:iconTint="@color/sallo_text_primary" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad2"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="2"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad3"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="3"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad4"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="4"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad5"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="5"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad6"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="6"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad7"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="7"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad8"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="8"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad9"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="9"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-                    <com.google.android.material.button.MaterialButton android:id="@+id/keypadClear" android:layout_width="0dp" android:layout_height="56dp" android:layout_columnWeight="1" android:text="@string/clear" app:backgroundTint="@color/sallo_border" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypad0"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="0"
-                        app:backgroundTint="@color/material_dynamic_neutral0" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/keypadDelete"
-                        android:layout_width="0dp"
-                        android:layout_height="56dp"
-                        android:layout_columnWeight="1"
-                        android:text="&lt;"
-                        app:backgroundTint="@color/sallo_exit" />
-                </GridLayout>
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/keypadConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/confirm"
+                    android:id="@+id/adminEnterButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/enter"
+                    android:textSize="15sp"
                     app:backgroundTint="@color/sallo_primary" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/adminEnterButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/enter"
-                        app:backgroundTint="@color/sallo_primary_dark" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/adminCancelButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_weight="1"
-                        android:text="@string/cancel"
-                        app:strokeColor="@color/sallo_border"
-                        app:strokeWidth="1dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="@string/restricted_footer"
-                    android:textColor="@color/sallo_text_secondary"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/adminCancelButton"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/cancel"
+                    android:textSize="15sp"
+                    app:strokeColor="@color/sallo_border"
+                    app:strokeWidth="1dp" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

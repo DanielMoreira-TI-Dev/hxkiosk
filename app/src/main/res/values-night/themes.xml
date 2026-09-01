@@ -1,3 +1,3 @@
 <resources>
-    <style name="Base.Theme.SalloKyosk" parent="Theme.Material3.Light.NoActionBar" />
+    <style name="Base.Theme.HxKiosk" parent="Theme.Material3.Light.NoActionBar" />
 </resources>

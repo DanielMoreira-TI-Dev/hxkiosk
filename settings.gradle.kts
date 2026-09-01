@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Sallo Kyosk"
+rootProject.name = "hxkiosk"
 include(":app")
  

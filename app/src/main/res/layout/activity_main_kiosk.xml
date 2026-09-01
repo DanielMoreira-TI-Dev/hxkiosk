@@ -274,11 +274,13 @@
     <View
         android:id="@+id/statusBarTouchBlocker"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="96dp"
         android:layout_gravity="top"
         android:background="@drawable/bg_apps_drawer_status_guard"
         android:clickable="true"
+        android:elevation="24dp"
         android:focusable="true"
+        android:importantForAccessibility="no"
         android:visibility="gone" />
 
     <LinearLayout
@@ -329,7 +331,9 @@
         android:drawablePadding="0dp"
         android:drawableTint="@color/white"
         android:focusable="true"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="12dp"
         android:text="" />
 </FrameLayout>

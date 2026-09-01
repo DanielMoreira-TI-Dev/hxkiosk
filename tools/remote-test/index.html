@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <title>hxkiosk - teste remoto</title>
+    <style>
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            height: 100%;
+            background: #070b1a;
+            color: #eef2ff;
+            font-family: Segoe UI, sans-serif;
+            overflow: hidden;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            flex: 0 0 auto;
+            padding: 8px 16px 4px;
+            text-align: center;
+        }
+        body.connected header p { display: none; }
+        body.connected h1 { font-size: 16px; margin-bottom: 4px; }
+        h1 { margin: 0 0 4px; font-size: 22px; }
+        p { margin: 0 0 8px; color: #9aa3c7; }
+        button {
+            border: 0;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font: inherit;
+            background: #3d7bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .error { color: #ff8a80; min-height: 16px; margin: 4px 0 0; }
+        .screen-wrap {
+            display: none;
+            flex: 1 1 0;
+            min-height: 0;
+            margin: 12px 16px 8px;
+            background: #111827;
+            border-radius: 12px;
+            position: relative;
+            cursor: none;
+            touch-action: none;
+            user-select: none;
+            outline: none;
+        }
+        .screen-wrap.on { display: block; }
+        canvas {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+        .dot {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            margin: -9px 0 0 -9px;
+            border-radius: 50%;
+            background: #3d7bff;
+            border: 2px solid #fff;
+            pointer-events: none;
+            display: none;
+            z-index: 2;
+        }
+        .hint {
+            display: none;
+            flex: 0 0 auto;
+            margin: 0 16px 10px;
+            font-size: 12px;
+            color: #9aa3c7;
+            text-align: center;
+        }
+        .hint.on { display: block; }
+        .nav-bar {
+            display: none;
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 12px;
+            z-index: 8;
+            padding: 10px;
+            border-radius: 16px;
+            background: rgba(7, 11, 26, 0.92);
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        .nav-bar.on { display: flex; }
+        .nav-bar button {
+            min-width: 120px;
+            min-height: 44px;
+            font-size: 16px;
+            font-weight: 700;
+            background: #3d7bff;
+            cursor: pointer;
+        }
+        .nav-bar button:hover { background: #5b8fff; }
+        .pc-keyboard {
+            display: none;
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 68px;
+            z-index: 7;
+            padding: 8px;
+            border-radius: 12px;
+            background: rgba(7, 11, 26, 0.94);
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        .pc-keyboard.on { display: block; }
+        .pc-keyboard .row {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .pc-keyboard button {
+            min-width: 28px;
+            min-height: 36px;
+            padding: 4px 6px;
+            font-size: 14px;
+            background: #1f2a44;
+        }
+        .pc-keyboard button.wide { min-width: 72px; }
+        .pc-keyboard button:hover { background: #3d7bff; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>hxkiosk</h1>
+        <p>Tela de teste no estilo AnyDesk: a tela inteira do tablet, nao so o app.</p>
+        <button id="connectButton" type="button">Conectar ao tablet</button>
+        <p id="statusText" class="error"></p>
+    </header>
+    <div id="screenWrap" class="screen-wrap" tabindex="0">
+        <canvas id="screenshot"></canvas>
+        <div id="cursorDot" class="dot"></div>
+        <div id="pcKeyboard" class="pc-keyboard"></div>
+        <div id="navBar" class="nav-bar">
+            <button id="backButton" type="button">Voltar</button>
+            <button id="homeButton" type="button">Home</button>
+            <button id="keyboardButton" type="button">Teclado</button>
+        </div>
+    </div>
+    <p id="hint" class="hint">Use o teclado do computador para digitar. Voltar e Home ficam na barra azul. Teclado abre um teclado nesta janela, sem piscar a tela do tablet.</p>
+    <script>
+        const TABLET_URL = window.HXKIOSK_TABLET
+            || new URLSearchParams(location.search).get("tablet")
+            || "";
+        const connectButton = document.getElementById("connectButton");
+        const statusText = document.getElementById("statusText");
+        const screenWrap = document.getElementById("screenWrap");
+        const canvas = document.getElementById("screenshot");
+        const ctx = canvas.getContext("2d");
+        const cursorDot = document.getElementById("cursorDot");
+        const hint = document.getElementById("hint");
+        const navBar = document.getElementById("navBar");
+        const pcKeyboard = document.getElementById("pcKeyboard");
+        let connected = false;
+        let refreshing = false;
+        let pointerStart = null;
+        let pointerStartAt = 0;
+        let timer = null;
+        let imageRect = { x: 0, y: 0, w: 1, h: 1 };
+
+        function api(path) {
+            return (TABLET_URL || "") + path;
+        }
+
+        function clamp01(value) {
+            return Math.max(0, Math.min(1, value));
+        }
+
+        function pointOnScreen(event) {
+            const canvasRect = canvas.getBoundingClientRect();
+            let localX = event.clientX - canvasRect.left;
+            let localY = event.clientY - canvasRect.top;
+            if (imageRect.w > 2 && imageRect.h > 2) {
+                localX = Math.min(imageRect.x + imageRect.w, Math.max(imageRect.x, localX));
+                localY = Math.min(imageRect.y + imageRect.h, Math.max(imageRect.y, localY));
+                return {
+                    x: clamp01((localX - imageRect.x) / imageRect.w),
+                    y: clamp01((localY - imageRect.y) / imageRect.h)
+                };
+            }
+            return {
+                x: clamp01(localX / Math.max(1, canvasRect.width)),
+                y: clamp01(localY / Math.max(1, canvasRect.height))
+            };
+        }
+
+        function moveDot(event) {
+            const rect = screenWrap.getBoundingClientRect();
+            cursorDot.style.display = "block";
+            cursorDot.style.left = (event.clientX - rect.left) + "px";
+            cursorDot.style.top = (event.clientY - rect.top) + "px";
+        }
+
+        function sendNav(action) {
+            fetch(api("/api/input"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ type: "nav", action })
+            }).then((response) => {
+                if (!response.ok) {
+                    statusText.textContent = "Nao foi possivel enviar " + action + ". Ative a acessibilidade do HX KIOSK.";
+                } else {
+                    statusText.textContent = "";
+                }
+            }).catch(() => {
+                statusText.textContent = "Falha ao enviar o comando ao tablet.";
+            });
+        }
+
+        function sendInput(payload) {
+            fetch(api("/api/input"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).then((response) => {
+                if (!response.ok && statusText.textContent === "") {
+                    statusText.textContent = "O tablet recusou o toque. Ative a acessibilidade do HX KIOSK.";
+                }
+            }).catch(() => {
+                statusText.textContent = "Falha ao enviar o toque ao tablet.";
+            });
+        }
+
+        async function refreshScreen() {
+            if (!connected || pointerStart || refreshing) {
+                return;
+            }
+            refreshing = true;
+            try {
+                const response = await fetch(api("/api/screenshot?t=" + Date.now()));
+                if (!response.ok) {
+                    return;
+                }
+                const blob = await response.blob();
+                const bitmap = await createImageBitmap(blob);
+                const cssW = Math.max(1, canvas.clientWidth);
+                const cssH = Math.max(1, canvas.clientHeight);
+                const dpr = window.devicePixelRatio || 1;
+                canvas.width = Math.round(cssW * dpr);
+                canvas.height = Math.round(cssH * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                ctx.fillStyle = "#111827";
+                ctx.fillRect(0, 0, cssW, cssH);
+                const pad = 16;
+                const maxW = Math.max(1, cssW - pad * 2);
+                const maxH = Math.max(1, cssH - pad * 2);
+                const scale = Math.min(maxW / bitmap.width, maxH / bitmap.height);
+                const dw = bitmap.width * scale;
+                const dh = bitmap.height * scale;
+                imageRect = {
+                    x: (cssW - dw) / 2,
+                    y: (cssH - dh) / 2,
+                    w: dw,
+                    h: dh
+                };
+                ctx.drawImage(bitmap, imageRect.x, imageRect.y, imageRect.w, imageRect.h);
+                bitmap.close();
+            } catch (error) {
+            } finally {
+                refreshing = false;
+            }
+        }
+
+        async function connect() {
+            connectButton.disabled = true;
+            statusText.textContent = "Conectando...";
+            try {
+                const response = await fetch(api("/api/status"));
+                if (!response.ok) {
+                    throw new Error("tablet indisponivel");
+                }
+                const status = await response.json();
+                connected = true;
+                document.body.classList.add("connected");
+                statusText.textContent = status.accessibility
+                    ? ""
+                    : "Ative o servico de acessibilidade do HX KIOSK para clicar e arrastar.";
+                screenWrap.classList.add("on");
+                hint.classList.add("on");
+                navBar.classList.add("on");
+                connectButton.textContent = "Atualizar conexao";
+                await new Promise((resolve) => requestAnimationFrame(resolve));
+                await refreshScreen();
+                if (timer) clearInterval(timer);
+                timer = setInterval(refreshScreen, 250);
+                screenWrap.focus();
+            } catch (error) {
+                connected = false;
+                statusText.textContent = "Nao foi possivel conectar ao tablet.";
+            } finally {
+                connectButton.disabled = false;
+            }
+        }
+
+        screenWrap.addEventListener("pointermove", (event) => {
+            if (!connected) return;
+            moveDot(event);
+        });
+        screenWrap.addEventListener("pointerleave", () => {
+            cursorDot.style.display = "none";
+        });
+        screenWrap.addEventListener("pointerdown", (event) => {
+            if (!connected) return;
+            if (event.target.closest(".nav-bar") || event.target.closest(".pc-keyboard")) return;
+            const point = pointOnScreen(event);
+            if (!point) return;
+            event.preventDefault();
+            screenWrap.setPointerCapture(event.pointerId);
+            pointerStart = point;
+            pointerStartAt = Date.now();
+            moveDot(event);
+            screenWrap.focus();
+        });
+        screenWrap.addEventListener("pointerup", (event) => {
+            if (!connected || !pointerStart) return;
+            event.preventDefault();
+            const end = pointOnScreen(event) || pointerStart;
+            const movedPx = Math.hypot(
+                (end.x - pointerStart.x) * Math.max(1, imageRect.w),
+                (end.y - pointerStart.y) * Math.max(1, imageRect.h)
+            );
+            const duration = Math.max(70, Math.min(500, Date.now() - pointerStartAt));
+            if (movedPx > 24) {
+                sendInput({
+                    type: "swipe",
+                    x: pointerStart.x,
+                    y: pointerStart.y,
+                    x2: end.x,
+                    y2: end.y,
+                    duration
+                });
+            } else {
+                sendInput({ type: "tap", x: end.x, y: end.y });
+            }
+            pointerStart = null;
+            try { screenWrap.releasePointerCapture(event.pointerId); } catch (error) {}
+        });
+        screenWrap.addEventListener("pointercancel", () => { pointerStart = null; });
+        screenWrap.addEventListener("contextmenu", (event) => event.preventDefault());
+        window.addEventListener("keydown", (event) => {
+            if (!connected) return;
+            if (event.target && event.target.closest && event.target.closest(".nav-bar")) return;
+            if (event.key === "F5" || event.key === "F12" || (event.ctrlKey && (event.key === "r" || event.key === "R"))) return;
+            event.preventDefault();
+            sendInput({
+                type: "key",
+                key: event.key,
+                code: event.code,
+                shift: event.shiftKey,
+                ctrl: event.ctrlKey,
+                alt: event.altKey,
+                repeat: event.repeat
+            });
+        });
+        window.addEventListener("resize", () => { if (connected) refreshScreen(); });
+        connectButton.addEventListener("click", connect);
+        document.getElementById("backButton").addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            sendNav("back");
+        });
+        document.getElementById("homeButton").addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            sendNav("home");
+        });
+        document.getElementById("keyboardButton").addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            pcKeyboard.classList.toggle("on");
+            screenWrap.focus();
+        });
+
+        (function buildKeyboard() {
+            const rows = [
+                ["1","2","3","4","5","6","7","8","9","0"],
+                ["q","w","e","r","t","y","u","i","o","p"],
+                ["a","s","d","f","g","h","j","k","l"],
+                ["z","x","c","v","b","n","m"],
+                ["Backspace"," ","Enter"]
+            ];
+            rows.forEach((row) => {
+                const rowEl = document.createElement("div");
+                rowEl.className = "row";
+                row.forEach((key) => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.textContent = key === " " ? "Espaco" : (key === "Backspace" ? "Apagar" : (key === "Enter" ? "Enter" : key));
+                    if (key === " " || key === "Backspace" || key === "Enter") {
+                        button.classList.add("wide");
+                    }
+                    button.addEventListener("click", (clickEvent) => {
+                        clickEvent.preventDefault();
+                        clickEvent.stopPropagation();
+                        sendInput({
+                            type: "key",
+                            key: key === " " ? " " : key,
+                            code: key === " " ? "Space" : (key === "Backspace" ? "Backspace" : (key === "Enter" ? "Enter" : "Key" + key.toUpperCase())),
+                            shift: false,
+                            ctrl: false,
+                            alt: false
+                        });
+                    });
+                    rowEl.appendChild(button);
+                });
+                pcKeyboard.appendChild(rowEl);
+            });
+        })();
+    </script>
+</body>
+</html>

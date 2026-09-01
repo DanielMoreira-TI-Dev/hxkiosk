@@ -1,5 +1,5 @@
 <resources>
-    <style name="Base.Theme.SalloKyosk" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.HxKiosk" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/sallo_primary</item>
         <item name="colorPrimaryContainer">@color/sallo_primary_dark</item>
         <item name="colorSecondary">@color/sallo_accent</item>
@@ -8,32 +8,32 @@
         <item name="android:statusBarColor">@color/sallo_primary_dark</item>
         <item name="android:navigationBarColor">@color/sallo_primary_dark</item>
         <item name="android:windowLightStatusBar">false</item>
-        <item name="materialCardViewStyle">@style/Widget.SalloKyosk.CardView</item>
-        <item name="materialButtonStyle">@style/Widget.SalloKyosk.Button</item>
-        <item name="switchStyle">@style/Widget.SalloKyosk.Switch</item>
+        <item name="materialCardViewStyle">@style/Widget.HxKiosk.CardView</item>
+        <item name="materialButtonStyle">@style/Widget.HxKiosk.Button</item>
+        <item name="switchStyle">@style/Widget.HxKiosk.Switch</item>
     </style>
 
-    <style name="Theme.SalloKyosk" parent="Base.Theme.SalloKyosk" />
+    <style name="Theme.HxKiosk" parent="Base.Theme.HxKiosk" />
 
-    <style name="Theme.SalloKyosk.Splash" parent="Theme.SalloKyosk">
+    <style name="Theme.HxKiosk.Splash" parent="Theme.HxKiosk">
         <item name="android:windowBackground">@color/sallo_primary_dark</item>
     </style>
 
-    <style name="Theme.SalloKyosk.Dialog" parent="Theme.Material3.Light.Dialog">
+    <style name="Theme.HxKiosk.Dialog" parent="Theme.Material3.Light.Dialog">
         <item name="colorPrimary">@color/sallo_primary</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="Widget.SalloKyosk.CardView" parent="Widget.Material3.CardView.Elevated">
+    <style name="Widget.HxKiosk.CardView" parent="Widget.Material3.CardView.Elevated">
         <item name="cardCornerRadius">24dp</item>
     </style>
 
-    <style name="Widget.SalloKyosk.Button" parent="Widget.Material3.Button">
+    <style name="Widget.HxKiosk.Button" parent="Widget.Material3.Button">
         <item name="cornerRadius">18dp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
-    <style name="Widget.SalloKyosk.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+    <style name="Widget.HxKiosk.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="thumbTint">@color/sallo_accent</item>
         <item name="trackTint">@color/sallo_border</item>
     </style>
